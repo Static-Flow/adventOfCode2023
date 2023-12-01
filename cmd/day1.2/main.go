@@ -10,13 +10,18 @@ var digits = map[string]int{"one": 1, "two": 2, "three": 3, "four": 4, "five": 5
 var digitsMap = internal.NewTree()
 
 func processLine(line string) int {
-	var ints []int
+	var firstInt int
+	var secondInt int
 	var currentTree *internal.Tree
 	var exists bool
 	for index, lineRune := range line {
 		if internal.IsRuneANumber(lineRune) {
 			// rune is a number
-			ints = append(ints, int(lineRune-'0'))
+			if firstInt == 0 {
+				firstInt = int(lineRune - '0')
+			} else {
+				secondInt = int(lineRune - '0')
+			}
 		} else {
 			// rune is letter
 			if currentTree, exists = digitsMap[lineRune]; exists {
@@ -26,7 +31,11 @@ func processLine(line string) int {
 						// next character matches, continue
 						if currentTree == nil {
 							// end of a match so a digit has been found
-							ints = append(ints, digits[line[index:index+idx+2]])
+							if firstInt == 0 {
+								firstInt = digits[line[index:index+idx+2]]
+							} else {
+								secondInt = digits[line[index:index+idx+2]]
+							}
 							break
 						}
 					} else {
@@ -38,7 +47,11 @@ func processLine(line string) int {
 			}
 		}
 	}
-	return (ints[0] * 10) + ints[len(ints)-1]
+	if secondInt == 0 {
+		return firstInt * 11
+	} else {
+		return (firstInt * 10) + secondInt
+	}
 }
 
 func main() {
