@@ -56,7 +56,7 @@ func processLine(line string) int {
 
 func main() {
 	sum := 0
-	if iterator, err := internal.NewLineIterator("input"); err == nil {
+	if iterator, err := internal.NewLineIterator("simple"); err == nil {
 		for iterator.Next() {
 			line := iterator.Line()
 			// Process the line
