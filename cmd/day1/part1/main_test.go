@@ -7,7 +7,7 @@ import (
 
 func BenchmarkProcessLine(b *testing.B) {
 	var lines []string
-	if iterator, err := internal.NewLineIterator("benchmarkData"); err == nil {
+	if iterator, err := internal.NewLineIterator("../benchmarkData"); err == nil {
 		for iterator.Next() {
 			line := iterator.Line()
 			// Process the line
