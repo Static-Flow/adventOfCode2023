@@ -32,13 +32,13 @@ BenchmarkProcessLine-8    122.6 ns/op      0 B/op	               0 allocs/op
 Performance (AVG. Per Line):
 ```
 Name                      CPU   ns/op      # bytes alloc'd per op      # of allocs per op
-BenchmarkProcessGame-8    60.53	op/ns	   0 B/op	               0 allocs/op
+BenchmarkProcessGame-8    60.53	ns/op	   0 B/op	               0 allocs/op
 ```
 
 #### Part 2: [Link](cmd/day2/part2)
 Performance (AVG. Per Line):
 ```
 Name                      CPU     ns/op      # bytes alloc'd per op      # of allocs per op
-BenchmarkProcessGame-8    261.14  op/ns      0 B/op	                 0 allocs/op
+BenchmarkProcessGame-8    138.33  ns/op      0 B/op	                 0 allocs/op
 ```
 </details>
