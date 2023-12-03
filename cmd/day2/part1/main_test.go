@@ -18,7 +18,7 @@ func BenchmarkProcessGame(b *testing.B) {
 			b.Run(line, func(b *testing.B) {
 				var sum int
 				for i := 0; i < b.N; i++ {
-					if processGame(lines[0]) {
+					if processGame(line) {
 						sum += gameNumber
 					}
 				}
