@@ -9,85 +9,54 @@ import (
 	"runtime/pprof"
 )
 
-func processPull(pullLine string) *day2.Cube {
-	var cube *day2.Cube
-	var count int
-	var color string
+func processPull(pullLine string) bool {
 	var max int
 	if pullLine[1] == ' ' {
-		count = int(pullLine[0] - '0')
-		color = pullLine[2:]
-		if max, _ = day2.ColorMap[color]; count <= max {
-			cube = &day2.Cube{
-				CubeColor: color,
-				Count:     count,
-			}
+		if max, _ = day2.ColorMap[pullLine[2:]]; int(pullLine[0]-'0') <= max {
+			return true
 		}
 	} else {
-		count = (int(pullLine[0]-'0') * 10) + int(pullLine[1]-'0')
-		color = pullLine[3:]
-		if max, _ = day2.ColorMap[color]; count <= max {
-			cube = &day2.Cube{
-				CubeColor: color,
-				Count:     count,
-			}
+		if max, _ = day2.ColorMap[pullLine[3:]]; (int(pullLine[0]-'0')*10)+int(pullLine[1]-'0') <= max {
+			return true
 		}
 	}
-	return cube
+	return false
 }
 
-var game = &day2.Game{Rounds: []*day2.Round{}}
-var round = &day2.Round{Cubes: []*day2.Cube{}}
+var gameNumber int
 
-func processGame(line string) *day2.Game {
-	game.Rounds = game.Rounds[:0]
+func processGame(line string) bool {
+
 	if line[6] == ':' {
-		game.Id = int(line[5] - '0')
+		gameNumber = int(line[5] - '0')
 		line = line[8:]
 	} else if line[7] == ':' {
-		game.Id = (int(line[5]-'0') * 10) + int(line[6]-'0')
+		gameNumber = (int(line[5]-'0') * 10) + int(line[6]-'0')
 		line = line[9:]
 	} else {
-		game.Id = 100
+		gameNumber = 100
 		line = line[10:]
 	}
 	var lastMatchIndex int
-	round.Cubes = round.Cubes[:0]
-	var cubePull *day2.Cube
 	var index int
 	var lineRune rune
 	for index, lineRune = range line {
 		switch lineRune {
 		case ',':
-			if cubePull = processPull(line[lastMatchIndex:index]); cubePull != nil {
-				// cube pull was within allowed range
-				round.Cubes = append(round.Cubes, cubePull)
-				lastMatchIndex = index + 2
-			} else {
-				// cube pull was outside allowed range so return a nil game
-				game.Rounds = nil
-				return game
-			}
+			fallthrough
 		case ';':
-			if cubePull = processPull(line[lastMatchIndex:index]); cubePull != nil {
-				round.Cubes = append(round.Cubes, cubePull)
-				game.Rounds = append(game.Rounds, round)
-				round.Cubes = round.Cubes[:0]
-				lastMatchIndex = index + 2
-			} else {
-				game.Rounds = nil
-				return game
+			if processPull(line[lastMatchIndex:index]) == false {
+				// cube pull was not within allowed range
+				return false
 			}
+			lastMatchIndex = index + 2
 		}
 	}
-	if cubePull = processPull(line[lastMatchIndex:]); cubePull != nil {
-		round.Cubes = append(round.Cubes, processPull(line[lastMatchIndex:]))
-		game.Rounds = append(game.Rounds, round)
-		return game
-	} else {
-		game.Rounds = nil
-		return game
+	if processPull(line[lastMatchIndex:]) == false {
+		// cube pull was not within allowed range
+		return false
 	}
+	return true
 }
 
 func main() {
@@ -103,9 +72,8 @@ func main() {
 		for iterator.Next() {
 			line = iterator.Line()
 			// Process the line
-			processGame(line)
-			if game.Rounds != nil {
-				sum += game.Id
+			if processGame(line) {
+				sum += gameNumber
 			}
 		}
 
