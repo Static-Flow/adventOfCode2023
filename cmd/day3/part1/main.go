@@ -39,11 +39,10 @@ import (
 	fmt.Println(string(walkableFileReader.MoveEast()))
 */
 
-var walkableFileReader = internal.NewWalkableFileReader("../input")
+var walkableReader = internal.NewWalkableByteStream("../input")
 
 func isEnginePart(character byte) bool {
 	if character != 46 && (character >= 58 || (character >= 33 && character <= 47)) {
-		// fmt.Println(string(character), " is an engine part")
 		return true
 	}
 	return false
@@ -52,10 +51,10 @@ func isEnginePart(character byte) bool {
 // searchNumberNeighbours searches each character in a cardinal direction counter-clockwise from the current character and if any are engine parts returns true
 func searchNumberNeighbours(directions []internal.Direction) bool {
 	var searchedCharacter byte
-	var err error
 
 	for _, DIRECTION := range directions {
-		if searchedCharacter, err = walkableFileReader.ReadDirection(DIRECTION); err == nil && isEnginePart(searchedCharacter) {
+		searchedCharacter = walkableReader.ReadOrMoveDirection(false, DIRECTION)
+		if isEnginePart(searchedCharacter) {
 			return true
 		}
 	}
@@ -68,7 +67,7 @@ func processEngine() int {
 	var sum int
 	var engineNumber bool
 	for {
-		if character = walkableFileReader.MoveEast(); character != 0 {
+		if character = walkableReader.ReadOrMoveDirection(true, internal.EAST); character != 0 {
 			// fmt.Println(string(character))
 			if internal.IsRuneANumber(rune(character)) {
 				if storedNumber == 0 {
@@ -109,6 +108,5 @@ func processEngine() int {
 }
 
 func main() {
-
 	fmt.Println(processEngine())
 }
