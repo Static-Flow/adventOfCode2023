@@ -1,4 +1,4 @@
-package internal
+package day3
 
 import (
 	"os"
@@ -33,6 +33,7 @@ type walkableByteReader struct {
 	width int
 	size  int
 	data  []byte
+	lines int
 }
 
 func NewWalkableByteStream(filePath string) *walkableByteReader {
@@ -59,7 +60,16 @@ func NewWalkableByteStream(filePath string) *walkableByteReader {
 			wr.width++
 		}
 	}
+	wr.lines = (wr.size / wr.width) - 1
 	return wr
+}
+
+func (wbr *walkableByteReader) NumOfLines() int {
+	return wbr.lines
+}
+
+func (wbr *walkableByteReader) LastSearchLocation() int {
+	return newOffset
 }
 
 func (wbr *walkableByteReader) Reset() {
