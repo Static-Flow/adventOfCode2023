@@ -1,60 +1,59 @@
 package main
 
 import (
-	"adventOfCode2023/cmd/day2"
 	"adventOfCode2023/internal"
 	"fmt"
 	"log"
+	"strings"
 )
 
-var game = &day2.GamePart2{MaxColorsMap: map[string]int{day2.GREEN: 0, day2.BLUE: 0, day2.RED: 0}}
-
-func processGame(line string) *day2.GamePart2 {
-	game.MaxColorsMap[day2.RED] = 0
-	game.MaxColorsMap[day2.GREEN] = 0
-	game.MaxColorsMap[day2.BLUE] = 0
-
-	skip := 5
-	if line[skip+1] == ':' {
-		skip += 3
-	} else if line[skip+2] == ':' {
-		skip += 4
-	} else {
-		skip += 5
-	}
-	var lastMatchIndex int
-	var index int
+func processGame(line string) int {
+	var maxGreen, maxRed, maxBlue = 1, 1, 1
 	var lineRune rune
-	for index, lineRune = range line[skip:] {
-		switch lineRune {
-		case ',':
-			game.ProcessPull(line[skip+lastMatchIndex : skip+index])
-			lastMatchIndex = index + 2
-		case ';':
-			game.ProcessPull(line[skip+lastMatchIndex : skip+index])
-			lastMatchIndex = index + 2
+	var lastNumber int
+	for _, lineRune = range line {
+
+		if internal.IsRuneANumber(lineRune) {
+			if lastNumber == 0 {
+				lastNumber = int(lineRune - '0')
+			} else {
+				lastNumber = (lastNumber * 10) + int(lineRune-'0')
+			}
+		} else {
+			if lastNumber != 0 {
+				switch lineRune {
+				case 'r':
+					if lastNumber > maxRed {
+						maxRed = lastNumber
+					}
+					lastNumber = 0
+				case 'g':
+					if lastNumber > maxGreen {
+						maxGreen = lastNumber
+					}
+					lastNumber = 0
+				case 'b':
+					if lastNumber > maxBlue {
+						maxBlue = lastNumber
+					}
+					lastNumber = 0
+				}
+			}
 		}
 	}
-	game.ProcessPull(line[skip+lastMatchIndex:])
-	return game
+	// fmt.Println("Result:", maxRed*maxBlue*maxGreen)
+	return maxRed * maxBlue * maxGreen
 }
 
 func main() {
 
 	if iterator, err := internal.NewLineIterator("../input"); err == nil {
 		var sum int
-		var gameSum int
-		var value int
 		for iterator.Next() {
 			line := iterator.Line()
+			pieces := strings.SplitN(line, ":", 2)
 			// Process the line
-			// processGame(line)
-			// sum += 1 * game.MaxColorsMap[day2.BLUE] * game.MaxColorsMap[day2.GREEN] * game.MaxColorsMap[day2.RED]
-			gameSum = 1
-			for _, value = range processGame(line).MaxColorsMap {
-				gameSum *= value
-			}
-			sum += gameSum
+			sum += processGame(pieces[1])
 		}
 
 		if err = iterator.Err(); err != nil {
