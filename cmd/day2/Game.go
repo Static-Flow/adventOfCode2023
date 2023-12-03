@@ -1,52 +1,8 @@
 package day2
 
-import (
-	"fmt"
-	"strings"
-)
-
-type Game struct {
-	Id     int
-	Rounds []*Round
-}
-
-func (g *Game) String() string {
-	if len(g.Rounds) == 0 {
-		return fmt.Sprintf("Game ID:%d -- Skipped for non conformance", g.Id)
-	}
-	var str strings.Builder
-	for _, round := range g.Rounds {
-		str.WriteString(round.String())
-	}
-	return fmt.Sprintf("Game ID:%d\nGames:\n%s", g.Id, str.String())
-}
-
-type Round struct {
-	Cubes []*Cube
-}
-
-func (r *Round) String() string {
-	var str strings.Builder
-	for _, cube := range r.Cubes {
-		str.WriteString(cube.String())
-	}
-	return fmt.Sprintf("Round:\n%s", str.String())
-}
-
-type Cube struct {
-	CubeColor string
-	Count     int
-}
-
-func (c *Cube) String() string {
-	return fmt.Sprintf("\tCount: %d\n\tColor: %s\n", c.Count, c.CubeColor)
-}
-
 var BLUE = "blue"
 var RED = "red"
 var GREEN = "green"
-
-var ColorMap = map[string]int{BLUE: 14, RED: 12, GREEN: 13}
 
 type GamePart2 struct {
 	MaxColorsMap map[string]int

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"adventOfCode2023/cmd/day2"
 	"adventOfCode2023/internal"
 	"fmt"
 	"log"
@@ -9,52 +8,40 @@ import (
 	"runtime/pprof"
 )
 
-func processPull(pullLine string) bool {
-	var max int
-	if pullLine[1] == ' ' {
-		if max, _ = day2.ColorMap[pullLine[2:]]; int(pullLine[0]-'0') <= max {
-			return true
-		}
-	} else {
-		if max, _ = day2.ColorMap[pullLine[3:]]; (int(pullLine[0]-'0')*10)+int(pullLine[1]-'0') <= max {
-			return true
-		}
-	}
-	return false
-}
-
 var gameNumber int
 
 func processGame(line string) bool {
 
 	if line[6] == ':' {
 		gameNumber = int(line[5] - '0')
-		line = line[8:]
+		line = line[7:]
 	} else if line[7] == ':' {
 		gameNumber = (int(line[5]-'0') * 10) + int(line[6]-'0')
-		line = line[9:]
+		line = line[8:]
 	} else {
 		gameNumber = 100
-		line = line[10:]
+		line = line[9:]
 	}
-	var lastMatchIndex int
 	var index int
 	var lineRune rune
 	for index, lineRune = range line {
+
 		switch lineRune {
-		case ',':
-			fallthrough
-		case ';':
-			if processPull(line[lastMatchIndex:index]) == false {
-				// cube pull was not within allowed range
+		case 'r':
+			if line[index-1] == ' ' {
+				if line[index-2] > '2' && line[index-3] != ' ' {
+					return false
+				}
+			}
+		case 'g':
+			if line[index-2] > '3' && line[index-3] != ' ' {
 				return false
 			}
-			lastMatchIndex = index + 2
+		case 'b':
+			if line[index-2] > '4' && line[index-3] != ' ' {
+				return false
+			}
 		}
-	}
-	if processPull(line[lastMatchIndex:]) == false {
-		// cube pull was not within allowed range
-		return false
 	}
 	return true
 }
