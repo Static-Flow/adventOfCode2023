@@ -42,3 +42,23 @@ Name                      CPU     ns/op      # bytes alloc'd per op      # of al
 BenchmarkProcessGame-8    138.33  ns/op      0 B/op	                 0 allocs/op
 ```
 </details>
+
+### Day 3
+<details>
+
+#### Problem Text: [Link](cmd/day3)
+
+#### Part 1: [Link](cmd/day3/part1)
+Performance (AVG. Per Line):
+```
+Name                        CPU    ns/op      # bytes alloc'd per op    # of allocs per op
+BenchmarkProcessEngine-8    103517 ns/op      0 B/op	                0 allocs/op
+```
+
+#### Part 2: [Link](cmd/day3/part2)
+Performance (AVG. Per Line):
+```
+Name                        CPU     ns/op      # bytes alloc'd per op   # of allocs per op
+BenchmarkProcessEngine-8    68783   ns/op      0 B/op	                0 allocs/opp
+```
+</details>

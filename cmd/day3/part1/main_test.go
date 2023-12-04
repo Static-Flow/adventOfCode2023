@@ -7,12 +7,14 @@ import (
 
 var globalRes int
 
-func BenchmarkMain(b *testing.B) {
-	var res int
+func BenchmarkProcessEngine(b *testing.B) {
+	day3.WalkableReader = day3.NewWalkableByteStream("../input")
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		day3.WalkableReader.Reset()
-		res = processEngine()
+		gearSum = 0
+		processEngine()
 	}
-	globalRes = res
+	globalRes = gearSum
 
 }
