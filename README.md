@@ -62,3 +62,29 @@ Name                        CPU     ns/op      # bytes alloc'd per op   # of all
 BenchmarkProcessEngine-8    68783   ns/op      0 B/op	                0 allocs/opp
 ```
 </details>
+
+### Day 4
+<details>
+
+#### Problem Text: [Link](cmd/day4)
+
+#### Part 1: [Link](cmd/day4/part1)
+Performance (AVG. Per Line):
+```
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 585.6µs
+
+Name                        CPU    ns/op      # bytes alloc'd per op    # of allocs per op
+BenchmarkProcessCards-8     259682 ns/op      0 B/op                    0 allocs/op
+
+```
+
+#### Part 2: [Link](cmd/day4/part2)
+Performance (AVG. Per Line):
+```
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 519.1µs
+
+Benchmark:  
+Name                        CPU    ns/op      # bytes alloc'd per op    # of allocs per op
+BenchmarkProcessCards-8     1263   ns/op      0 B/op	                0 allocs/op
+```
+</details>

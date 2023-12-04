@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-var OFFSET = 2
+var OFFSET int
 var newOffset int
 
 type Direction int
