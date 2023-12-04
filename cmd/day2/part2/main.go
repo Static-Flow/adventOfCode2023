@@ -2,7 +2,6 @@ package main
 
 import (
 	"adventOfCode2023/internal"
-	"fmt"
 	"log"
 	"strings"
 )
@@ -41,7 +40,7 @@ func processGame(line string) int {
 			}
 		}
 	}
-	// fmt.Println("Result:", maxRed*maxBlue*maxGreen)
+	// //fmt.Println("Result:", maxRed*maxBlue*maxGreen)
 	return maxRed * maxBlue * maxGreen
 }
 
@@ -59,7 +58,7 @@ func main() {
 		if err = iterator.Err(); err != nil {
 			log.Fatalln(err)
 		}
-		fmt.Println(sum)
+		// fmt.Println(sum)
 
 	} else {
 		log.Fatalln(err)

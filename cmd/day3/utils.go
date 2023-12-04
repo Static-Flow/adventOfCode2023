@@ -1,6 +1,6 @@
 package day3
 
-var WalkableReader = NewWalkableByteStream("../input")
+var WalkableReader *walkableByteReader
 
 func IsEnginePart(character byte) bool {
 	if character != 46 && (character >= 58 || (character >= 33 && character <= 47)) {
@@ -12,18 +12,6 @@ func IsEnginePart(character byte) bool {
 func IsEngineGear(character byte) bool {
 	if character == 42 {
 		return true
-	}
-	return false
-}
-
-func SearchNeighboursForGears(directions []Direction) bool {
-	var searchedCharacter byte
-	var DIRECTION Direction
-	for _, DIRECTION = range directions {
-		searchedCharacter = WalkableReader.ReadOrMoveDirection(false, DIRECTION)
-		if IsEngineGear(searchedCharacter) {
-			return true
-		}
 	}
 	return false
 }
