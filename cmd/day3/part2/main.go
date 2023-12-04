@@ -4,194 +4,108 @@ import (
 	"adventOfCode2023/cmd/day3"
 	"adventOfCode2023/internal"
 	"fmt"
-	"math"
 )
 
-var storedNum int
-var index int
 var value byte
 var results = [2]int{}
+var gearSum int
+var gearNums int
+var res int
 
-func processNorthOfGear() int {
-	storedNum = 0
-	index = 1
+func processNorthOrSouthOfGear(direction day3.Direction) {
 	results[0], results[1] = 0, 0
-	if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.NORTH); internal.IsRuneANumber(rune(value)) {
-		// north is a number
-		storedNum = int(value - '0')
-		for {
-			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - index); internal.IsRuneANumber(rune(value)) {
-				storedNum = (int(value-'0') * int(math.Pow10(index))) + storedNum
-				index++
-			} else {
-				break
-			}
-		}
-		index = 1
-		for {
-			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + index); internal.IsRuneANumber(rune(value)) {
-				storedNum = (storedNum * 10) + int(value-'0')
-				index++
-			} else {
-				break
-			}
-		}
-		results[0] = storedNum
-	} else {
-		if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.NORTH_WEST); internal.IsRuneANumber(rune(value)) {
-			// north west is a number
-			index = 1
-			storedNum = int(value - '0')
-			for {
-				if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - index); internal.IsRuneANumber(rune(value)) {
-					storedNum = (int(value-'0') * int(math.Pow10(index))) + storedNum
-					index++
-				} else {
-					break
-				}
-			}
-			results[0] = storedNum
-		}
-		if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.NORTH_EAST); internal.IsRuneANumber(rune(value)) {
-			// north east is a number
-			index = 1
-			storedNum = int(value - '0')
-			for {
-				if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + index); internal.IsRuneANumber(rune(value)) {
-					storedNum = (storedNum * 10) + int(value-'0')
-					index++
-				} else {
-					break
-				}
-			}
-			results[1] = storedNum
-		}
-	}
-	// fmt.Println("north", storedNum)
-	return storedNum
-}
-
-func processSouthOfGear() int {
-	storedNum = 0
-	index = 1
-	results[0], results[1] = 0, 0
-	if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.SOUTH); internal.IsRuneANumber(rune(value)) {
-		// south is a number
-		storedNum = int(value - '0')
-		for {
-			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - index); internal.IsRuneANumber(rune(value)) {
-				storedNum = (int(value-'0') * int(math.Pow10(index))) + storedNum
-				index++
-			} else {
-				break
-			}
-		}
-		index = 1
-		for {
-			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + index); internal.IsRuneANumber(rune(value)) {
-				storedNum = (storedNum * 10) + int(value-'0')
-				index++
-			} else {
-				break
-			}
-		}
-		results[0] = storedNum
-	} else {
-		if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.SOUTH_WEST); internal.IsRuneANumber(rune(value)) {
-			// south west is a number
-			index = 1
-			storedNum = int(value - '0')
-			for {
-				if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - index); internal.IsRuneANumber(rune(value)) {
-					storedNum = (int(value-'0') * int(math.Pow10(index))) + storedNum
-					index++
-				} else {
-					break
-				}
-			}
-			results[0] = storedNum
-		}
-		if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.SOUTH_EAST); internal.IsRuneANumber(rune(value)) {
-			// south east is a number
-			index = 1
-			storedNum = int(value - '0')
-			for {
-				if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + index); internal.IsRuneANumber(rune(value)) {
-					storedNum = (storedNum * 10) + int(value-'0')
-					index++
-				} else {
-					break
-				}
-			}
-			results[1] = storedNum
-		}
-	}
-	// fmt.Println("south", storedNum)
-	return storedNum
-}
-
-func processEastOfGear() int {
-	storedNum = 0
-	if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.EAST); internal.IsRuneANumber(rune(value)) {
-		storedNum = int(value - '0')
-		if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 1); internal.IsRuneANumber(rune(value)) {
-			storedNum = (storedNum * 10) + int(value-'0')
-			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 2); internal.IsRuneANumber(rune(value)) {
-				storedNum = (storedNum * 10) + int(value-'0')
-			}
-		}
-	}
-	// fmt.Println("east", storedNum)
-	return storedNum
-}
-
-func processWestOfGear() int {
-	storedNum = 0
-	if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.WEST); internal.IsRuneANumber(rune(value)) {
-		storedNum = int(value - '0')
+	if value = day3.WalkableReader.ReadOrMoveDirection(false, direction); internal.IsRuneANumber(rune(value)) {
+		results[0] = int(value - '0')
 		if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - 1); internal.IsRuneANumber(rune(value)) {
-			storedNum = (int(value-'0') * 10) + storedNum
+			results[0] = (int(value-'0') * 10) + results[0]
 			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - 2); internal.IsRuneANumber(rune(value)) {
-				storedNum = (int(value-'0') * 100) + storedNum
+				results[0] = (int(value-'0') * 100) + results[0]
+			}
+		}
+		if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 1); internal.IsRuneANumber(rune(value)) {
+			results[0] = (results[0] * 10) + int(value-'0')
+			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 2); internal.IsRuneANumber(rune(value)) {
+				results[0] = (results[0] * 10) + int(value-'0')
+			}
+		}
+	} else {
+		if value = day3.WalkableReader.ReadOrMoveDirection(false, direction+1); internal.IsRuneANumber(rune(value)) {
+			results[0] = int(value - '0')
+			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - 1); internal.IsRuneANumber(rune(value)) {
+				results[0] = (int(value-'0') * 10) + results[0]
+				if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - 2); internal.IsRuneANumber(rune(value)) {
+					results[0] = (int(value-'0') * 100) + results[0]
+				}
+			}
+		}
+		if value = day3.WalkableReader.ReadOrMoveDirection(false, direction+2); internal.IsRuneANumber(rune(value)) {
+			results[1] = int(value - '0')
+			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 1); internal.IsRuneANumber(rune(value)) {
+				results[1] = (results[1] * 10) + int(value-'0')
+				if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 2); internal.IsRuneANumber(rune(value)) {
+					results[1] = (results[1] * 10) + int(value-'0')
+				}
 			}
 		}
 	}
-	// fmt.Println("west", storedNum)
-	return storedNum
 }
 
-func processGear() int {
-	gearSum := 1
-	gearNums := 0
-	if northValue := processNorthOfGear(); northValue > 0 {
-		for _, res := range results {
-			if res != 0 {
-				gearSum *= res
-				gearNums++
+func processEastOfGear() {
+	results[0] = 0
+	if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.EAST); internal.IsRuneANumber(rune(value)) {
+		results[0] = int(value - '0')
+		if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 1); internal.IsRuneANumber(rune(value)) {
+			results[0] = (results[0] * 10) + int(value-'0')
+			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() + 2); internal.IsRuneANumber(rune(value)) {
+				results[0] = (results[0] * 10) + int(value-'0')
 			}
 		}
 	}
-	if northValue := processSouthOfGear(); northValue > 0 {
-		for _, res := range results {
-			if res != 0 {
-				gearSum *= res
-				gearNums++
+}
+
+func processWestOfGear() {
+	results[0] = 0
+	if value = day3.WalkableReader.ReadOrMoveDirection(false, day3.WEST); internal.IsRuneANumber(rune(value)) {
+		results[0] = int(value - '0')
+		if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - 1); internal.IsRuneANumber(rune(value)) {
+			results[0] = (int(value-'0') * 10) + results[0]
+			if value = day3.WalkableReader.ReadAtLocation(day3.WalkableReader.LastSearchLocation() - 2); internal.IsRuneANumber(rune(value)) {
+				results[0] = (int(value-'0') * 100) + results[0]
 			}
 		}
 	}
-	if northValue := processEastOfGear(); northValue > 0 {
-		gearSum *= northValue
+}
+
+func processGear() {
+	gearSum = 1
+	gearNums = 0
+	processNorthOrSouthOfGear(day3.NORTH)
+	for _, res = range results {
+		if res != 0 {
+			gearSum *= res
+			gearNums++
+		}
+	}
+	processNorthOrSouthOfGear(day3.SOUTH)
+	for _, res = range results {
+		if res != 0 {
+			gearSum *= res
+			gearNums++
+		}
+	}
+	processEastOfGear()
+	if results[0] > 0 {
+		gearSum *= results[0]
 		gearNums++
 	}
-	if northValue := processWestOfGear(); northValue > 0 {
-		gearSum *= northValue
+	processWestOfGear()
+	if results[0] > 0 {
+		gearSum *= results[0]
 		gearNums++
 	}
-	// fmt.Println(gearSum)
 	if gearNums != 2 {
-		return 0
+		gearSum = 0
 	}
-	return gearSum
 }
 
 func processEngine() int {
@@ -202,7 +116,8 @@ func processEngine() int {
 		if character = day3.WalkableReader.ReadOrMoveDirection(true, day3.EAST); character != 0 {
 			if day3.IsEngineGear(character) {
 				// check gear
-				sum += processGear()
+				processGear()
+				sum += gearSum
 			}
 		} else {
 			break

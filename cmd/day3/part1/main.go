@@ -3,6 +3,7 @@ package main
 import (
 	"adventOfCode2023/cmd/day3"
 	"adventOfCode2023/internal"
+	"fmt"
 )
 
 func processEngine() int {
@@ -43,6 +44,6 @@ func processEngine() int {
 }
 
 func main() {
-	day3.WalkableReader = day3.NewWalkableByteStream("../simple")
-	// fmt.Println(processEngine())
+	day3.WalkableReader = day3.NewWalkableByteStream("../input")
+	fmt.Println(processEngine())
 }
