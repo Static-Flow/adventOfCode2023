@@ -1,15 +1,15 @@
 package main
 
 import (
-	"adventOfCode2023/cmd/day3"
-	"adventOfCode2023/internal"
 	"fmt"
+	"github.com/Static-Flow/adventOfCode2023/cmd/day3"
+	"github.com/Static-Flow/adventOfCode2023/internal"
 	"time"
 )
 
 var character byte
 var winningNumbers = [10]int{}
-var candidatesMap = map[int]bool{}
+var candidatesMap = [100]bool{}
 var multiplier = 0
 var storedDigit int
 var index int
@@ -61,12 +61,6 @@ func processCharacter() {
 	}
 }
 
-func initCandidateMap() {
-	for i := 1; i < 100; i++ {
-		candidatesMap[i] = false
-	}
-}
-
 func processCards() {
 	for {
 		if character = day3.WalkableReader.ReadOrMoveDirection(true, day3.EAST); character != 0 {
@@ -82,7 +76,6 @@ func processCards() {
 }
 
 func main() {
-	initCandidateMap()
 	day3.WalkableReader = day3.NewWalkableByteStream("../input")
 	day3.WalkableReader.SetLocation(7)
 	now := time.Now()

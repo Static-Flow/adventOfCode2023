@@ -26,7 +26,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 
 ## Performance (AVG. Per Line):
 ```
-Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 585.6µs
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 138µs
 
 Name                        CPU    ns/op      # bytes alloc'd per op    # of allocs per op
 BenchmarkProcessCards-8     259682 ns/op      0 B/op                    0 allocs/op

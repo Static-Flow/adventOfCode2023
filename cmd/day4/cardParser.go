@@ -1,18 +1,12 @@
 package day4
 
 import (
-	"adventOfCode2023/internal"
+	"github.com/Static-Flow/adventOfCode2023/internal"
 	"log"
 	"strings"
 )
 
-var candidatesMap = map[int]bool{}
-
-func InitCandidateMap() {
-	for i := 1; i < 100; i++ {
-		candidatesMap[i] = false
-	}
-}
+var candidatesMap = [100]bool{}
 
 func checkWinner(storedDigit int) bool {
 	if candidatesMap[storedDigit] {

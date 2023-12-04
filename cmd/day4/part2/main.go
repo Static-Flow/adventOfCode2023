@@ -1,8 +1,8 @@
 package main
 
 import (
-	"adventOfCode2023/cmd/day4"
 	"fmt"
+	"github.com/Static-Flow/adventOfCode2023/cmd/day4"
 	"time"
 )
 
@@ -23,7 +23,6 @@ func processCards() int {
 }
 
 func main() {
-	day4.InitCandidateMap()
 	sc = day4.NewScratchCards("../input")
 	now := time.Now()
 	fmt.Println(processCards())

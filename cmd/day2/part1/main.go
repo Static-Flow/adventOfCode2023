@@ -1,7 +1,7 @@
 package main
 
 import (
-	"adventOfCode2023/internal"
+	"github.com/Static-Flow/adventOfCode2023/internal"
 	"log"
 	"strings"
 )
