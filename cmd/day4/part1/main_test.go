@@ -1,22 +1,18 @@
 package main
 
 import (
-	"adventOfCode2023/cmd/day3"
+	"github.com/Static-Flow/adventOfCode2023/cmd/day4"
 	"testing"
 )
 
-var globalRes int
+var globalRes float64
 
 func BenchmarkProcessCards(b *testing.B) {
-	day3.WalkableReader = day3.NewWalkableByteStream("../input")
+	sc = day4.NewScratchCards("../input")
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		b.StopTimer()
-		day3.WalkableReader.Reset()
-		day3.WalkableReader.SetLocation(7)
-		sum = 0
-		b.StartTimer()
-		processCards()
+		sum = processCards()
+
 	}
 	globalRes = sum
 

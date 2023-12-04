@@ -1,7 +1,7 @@
 package main
 
 import (
-	"adventOfCode2023/cmd/day4"
+	"github.com/Static-Flow/adventOfCode2023/cmd/day4"
 	"testing"
 )
 
