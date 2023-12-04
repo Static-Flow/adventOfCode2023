@@ -22,10 +22,6 @@ const (
 	SOUTH_EAST
 )
 
-var CARDINAL_DIRECTIONS = []Direction{NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH, SOUTH_EAST, EAST, NORTH_EAST}
-
-var QUICK_CARDINAL_DIRECTIONS = []Direction{SOUTH_EAST, EAST, NORTH_EAST}
-
 type walkableByteReader struct {
 	// where the reader is in the file
 	location int

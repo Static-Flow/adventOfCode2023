@@ -15,16 +15,3 @@ func IsEngineGear(character byte) bool {
 	}
 	return false
 }
-
-// SearchNumberNeighbours searches each character in a cardinal direction counter-clockwise from the current character and if any are engine parts returns true
-func SearchNumberNeighbours(directions []Direction) bool {
-	var searchedCharacter byte
-	var DIRECTION Direction
-	for _, DIRECTION = range directions {
-		searchedCharacter = WalkableReader.ReadOrMoveDirection(false, DIRECTION)
-		if IsEnginePart(searchedCharacter) {
-			return true
-		}
-	}
-	return false
-}
