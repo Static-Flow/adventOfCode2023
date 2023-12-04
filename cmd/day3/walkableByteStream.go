@@ -1,6 +1,7 @@
 package day3
 
 import (
+	"log"
 	"os"
 	"runtime"
 )
@@ -45,7 +46,7 @@ func NewWalkableByteStream(filePath string) *walkableByteReader {
 	}
 	file, err := os.ReadFile(filePath)
 	if err != nil {
-		return nil
+		log.Fatalln(err)
 	}
 
 	wr.data = file
@@ -76,6 +77,21 @@ func (wbr *walkableByteReader) Reset() {
 	wbr.location = -1
 }
 
+func (wbr *walkableByteReader) SetLocation(location int) {
+	wbr.location = location
+}
+
+func (wbr *walkableByteReader) GetLocation() int {
+	return wbr.location
+}
+
+func (wbr *walkableByteReader) ReadAtLocation(location int) byte {
+	if location < 0 || location > wbr.size {
+		return 0
+	}
+	return wbr.data[location]
+}
+
 func (wbr *walkableByteReader) ReadOrMoveDirection(move bool, direction Direction) byte {
 	switch direction {
 	case NORTH:
@@ -103,7 +119,6 @@ func (wbr *walkableByteReader) ReadOrMoveDirection(move bool, direction Directio
 			return wbr.data[wbr.location]
 		} else {
 			return wbr.data[newOffset]
-
 		}
 	}
 }

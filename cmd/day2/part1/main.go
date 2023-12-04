@@ -2,7 +2,6 @@ package main
 
 import (
 	"adventOfCode2023/internal"
-	"fmt"
 	"log"
 	"strings"
 )
@@ -64,7 +63,7 @@ func main() {
 		if err = iterator.Err(); err != nil {
 			log.Fatalln(err)
 		}
-		fmt.Println(sum)
+		// fmt.Println(sum)
 
 	} else {
 		log.Fatalln(err)
