@@ -74,7 +74,7 @@ Performance (AVG. Per Line):
 Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 25µs
 
 Name                        CPU    ns/op      # bytes alloc'd per op    # of allocs per op
-BenchmarkProcessCards-8     2295 ns/op      0 B/op                    0 allocs/op
+BenchmarkProcessCards-8     2295   ns/op      0 B/op                    0 allocs/op
 ```
 
 #### Part 2: [Link](cmd/day4/part2)
