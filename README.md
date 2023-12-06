@@ -87,3 +87,21 @@ Name                        CPU    ns/op      # bytes alloc'd per op    # of all
 BenchmarkProcessCards-8     1263   ns/op      0 B/op	                0 allocs/op
 ```
 </details>
+
+### Day 5
+<details>
+
+#### Problem Text: [Link](cmd/day5)
+
+#### Part 1: [Link](cmd/day5/part1)
+Performance (AVG. Per Line):
+```
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 74µs
+```
+
+#### Part 2: [Link](cmd/day5/part2)
+Performance (AVG. Per Line):
+```
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 7 minutes....
+```
+</details>
