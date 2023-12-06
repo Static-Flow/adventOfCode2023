@@ -9,10 +9,6 @@ import (
 
 var races [][2]int
 
-func calculateARace(holdCount int) int {
-	return holdCount * (races[0][0] - holdCount)
-}
-
 func main() {
 	walker := day3.NewWalkableByteStream("../input")
 	var storedNum int
@@ -53,14 +49,11 @@ func main() {
 	var sum = 1
 	var endIndex int
 	for _, race := range races {
-		// fmt.Println("\n Checking race: ", race)
 		winCount = 0
 		index = 1
 		endIndex = race[0] - 1
 		for {
-			// fmt.Println("Checking:", index, endIndex)
 			if index*(race[0]-index) > race[1] {
-				// fmt.Println("Winner: ", index, index*(race[0]-index))
 				if winCount == 0 {
 					winCount = index
 				} else {
@@ -71,8 +64,6 @@ func main() {
 				index++
 			}
 			if endIndex*(race[0]-endIndex) > race[1] {
-				// fmt.Println("Winner: ", endIndex, endIndex*(race[0]-endIndex))
-
 				if winCount == 0 {
 					winCount = endIndex
 				} else {
@@ -83,7 +74,6 @@ func main() {
 				endIndex--
 			}
 		}
-		// fmt.Println("final win count:", winCount+1)
 		sum *= winCount + 1
 	}
 	fmt.Println(sum)

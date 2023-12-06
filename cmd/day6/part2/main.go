@@ -4,10 +4,55 @@ import (
 	"fmt"
 	"github.com/Static-Flow/adventOfCode2023/cmd/day3"
 	"github.com/Static-Flow/adventOfCode2023/internal"
+	"math"
 	"time"
 )
 
-var race [2]int
+var raceTime, distance float64
+
+/*
+The reddit way which _is_ much faster but for the sake of honesty my version is below
+*/
+func quadratic() float64 {
+	halfTime := raceTime / 2
+	root := math.Pow(halfTime, 2)
+	sqrRoot := math.Sqrt(root - distance)
+	return (math.Floor(halfTime + sqrRoot)) - (math.Ceil(halfTime - sqrRoot)) + 1
+}
+
+/*
+*
+Start from the ends and work towards the middle till you find both the min and max win
+*/
+func search() (winCount float64) {
+	var endIndex float64
+	var index = float64(1)
+	endIndex = raceTime - 1
+	for {
+		if index*(raceTime-index) > distance {
+			if winCount == 0 {
+				winCount = index
+			} else {
+				winCount = winCount - index
+				break
+			}
+		} else {
+			index++
+		}
+		if endIndex*(raceTime-endIndex) > distance {
+			if winCount == 0 {
+				winCount = endIndex
+			} else {
+				winCount = endIndex - winCount
+				break
+			}
+		} else {
+			endIndex--
+		}
+	}
+	winCount++
+	return
+}
 
 func main() {
 	walker := day3.NewWalkableByteStream("../input")
@@ -22,7 +67,7 @@ func main() {
 				}
 			} else {
 				if storedNum != 0 && (character == '\r' || character == '\n') {
-					race[0] = storedNum
+					raceTime = float64(storedNum)
 					storedNum = 0
 				}
 			}
@@ -30,39 +75,10 @@ func main() {
 			break
 		}
 	}
-	race[1] = storedNum
-	var winCount = 0
+	distance = float64(storedNum)
 	now := time.Now()
-	var endIndex int
-	var index = 1
-	endIndex = race[0] - 1
-	for {
-		// fmt.Println("Checking:", index, endIndex)
-		if index*(race[0]-index) > race[1] {
-			// fmt.Println("Winner: ", index, index*(race[0]-index))
-			if winCount == 0 {
-				winCount = index
-			} else {
-				winCount = winCount - index
-				break
-			}
-		} else {
-			index++
-		}
-		if endIndex*(race[0]-endIndex) > race[1] {
-			// fmt.Println("Winner: ", endIndex, endIndex*(race[0]-endIndex))
 
-			if winCount == 0 {
-				winCount = endIndex
-			} else {
-				winCount = endIndex - winCount
-				break
-			}
-		} else {
-			endIndex--
-		}
-	}
-	fmt.Println("final win count:", winCount+1)
+	fmt.Println("final win count:", search())
 	fmt.Println(time.Since(now))
 
 }
