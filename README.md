@@ -105,3 +105,21 @@ Performance (AVG. Per Line):
 Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 7 minutes....
 ```
 </details>
+
+### Day 6
+<details>
+
+#### Problem Text: [Link](cmd/day6)
+
+#### Part 1: [Link](cmd/day6/part1)
+Performance (AVG. Per Line):
+```
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 20µs
+```
+
+#### Part 2: [Link](cmd/day6/part2)
+Performance (AVG. Per Line):
+```
+Run Time [ using now:=time.Now() //do_work print(time.Since(now) ]: 4 ms
+```
+</details>
